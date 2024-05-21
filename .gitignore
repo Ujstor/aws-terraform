@@ -1,0 +1,6 @@
+*.tfstate
+*.tfstate.backup
+.terraform
+*.iml
+
+terraform-up-and-running-code-0.3.0
