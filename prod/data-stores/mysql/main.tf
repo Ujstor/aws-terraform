@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket         = "tf-state-ujstor"
-    key            = "stage/data-stores/mysql/terraform.tfstate"
+    key            = "prod/data-stores/mysql/terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "terraform-state-locks"
     encrypt        = true
@@ -21,9 +21,9 @@ provider "aws" {
 module "mysql-db" {
   source = "../../../modules/data-stores/mysql"
 
-  identifier_prefix = "stage-mysql-db"
+  identifier_prefix = "prod-mysql-db"
   instance_class    = "db.t3.micro"
-  db_name           = "stageDB"
+  db_name           = "prodDB"
 
   db_username = var.db_username
   db_password = var.db_password
