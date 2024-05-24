@@ -65,7 +65,7 @@ resource "aws_lb_listener_rule" "asg" {
 resource "aws_launch_configuration" "example" {
   image_id        = var.image_id
   instance_type   = var.instance_type
-  security_groups = [aws_security_group.alb.id]
+  security_groups = [aws_security_group.instance.id]
 
   user_data = templatefile("${path.module}/user-data.sh", {
     server_port = var.server_port
@@ -93,6 +93,20 @@ resource "aws_autoscaling_group" "example" {
     value               = var.cluster_name
     propagate_at_launch = true
   }
+}
+
+resource "aws_security_group" "instance" {
+  name = "${var.cluster_name}-instance"
+}
+
+resource "aws_security_group_rule" "allow_server_http_inbound" {
+  type              = "ingress"
+  security_group_id = aws_security_group.instance.id
+
+  from_port   = var.server_port
+  to_port     = var.server_port
+  protocol    = local.tcp_protocol
+  cidr_blocks = local.all_ips
 }
 
 resource "aws_security_group" "alb" {
