@@ -45,3 +45,14 @@ variable "max_size" {
   description = "The maximum size of the Auto Scaling group"
   type        = number
 }
+
+variable "custom_tags" {
+  description = "Costum tag to set on the instanc in the ASG"
+  default     = {}
+
+}
+
+variable "enable_autoscaling" {
+  description = "If set to true enable the Auto Scaling"
+  type        = bool
+}

@@ -16,6 +16,12 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
+  default_tags {
+    tags = {
+      Owner     = "team-foo"
+      ManagedBy = "Terraform"
+    }
+  }
 }
 
 module "webserver_cluster" {
@@ -27,6 +33,13 @@ module "webserver_cluster" {
   instance_type = "t2.micro"
   min_size      = 2
   max_size      = 5
+
+  custom_tags = {
+    Owner     = "team-foo"
+    ManagedBy = "Terraform"
+  }
+
+  enable_autoscaling = false
 }
 
 resource "aws_security_group_rule" "allow_testing_inbound" {

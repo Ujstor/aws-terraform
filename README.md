@@ -1,7 +1,6 @@
 # Terraform: Up & Running Code
 
-This repo contains the code samples for the book *[Terraform: Up and Running](http://www.terraformupandrunning.com)*, 
-by [Yevgeniy Brikman](http://www.ybrikman.com).
+This repo contains my code implementation for the book *[Terraform: Up and Running](http://www.terraformupandrunning.com)* 
 
 ## Packer
 

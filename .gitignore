@@ -3,4 +3,6 @@
 .terraform
 *.iml
 
+# .auto.tfvars #shuld be included in.gitignore
+
 terraform-up-and-running-code-0.3.0

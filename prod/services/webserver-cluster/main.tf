@@ -16,6 +16,13 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
+
+  default_tags {
+    tags = {
+      Owner     = "team-foo"
+      ManagedBy = "Terraform"
+    }
+  }
 }
 
 module "webserver_cluster" {
@@ -27,27 +34,14 @@ module "webserver_cluster" {
   instance_type = "t3.micro"
   min_size      = 2
   max_size      = 10
-}
 
+  custom_tags = {
+    Owner     = "team-foo"
+    ManagedBy = "Terraform"
+  }
 
-resource "aws_autoscaling_schedule" "scale_out_during_business_hours" {
-  scheduled_action_name = "scale-out-during-business-hours"
-  min_size              = 2
-  max_size              = 10
-  desired_capacity      = 10
-  recurrence            = "0 9 * * *"
+  enable_autoscaling = true
 
-  autoscaling_group_name = module.webserver_cluster.asg_name
-}
-
-resource "aws_autoscaling_schedule" "scale_in_at_night" {
-  scheduled_action_name = "scale-in-at-night"
-  min_size              = 2
-  max_size              = 10
-  desired_capacity      = 2
-  recurrence            = "0 17 * * *"
-
-  autoscaling_group_name = module.webserver_cluster.asg_name
 }
 
 output "alb_dns_name" {
