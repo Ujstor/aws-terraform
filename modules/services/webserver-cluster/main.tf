@@ -95,7 +95,11 @@ resource "aws_autoscaling_group" "example" {
   }
 
   dynamic "tag" {
-    for_each = var.custom_tags
+    for_each = {
+      for key, value in var.custom_tags :
+      key => upper(value)
+      if key != "Name"
+    }
     content {
       key                 = tag.key
       value               = tag.value
@@ -103,6 +107,7 @@ resource "aws_autoscaling_group" "example" {
     }
   }
 }
+
 
 resource "aws_autoscaling_schedule" "scale_out_during_business_hours" {
   count = var.enable_autoscaling ? 1 : 0

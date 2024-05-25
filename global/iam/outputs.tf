@@ -46,3 +46,21 @@ output "neo_cloudwatch_policy_arn_splat" {
     aws_iam_user_policy_attachment.neo_cloudwatch_read_only[*].policy_arn
   ))
 }
+
+output "for_directive_index_if_strip" {
+  value = <<EOF
+%{~for i, name in var.user_names~}
+${name}%{if i < length(varl.user_names) - 1}, %{endif}
+%{~endfor~}
+EOF
+
+  # for_directive_index_if_strip = "neo, trinity, morpheus"
+}
+
+output "for_directive_index_if_else_strip" {
+  value = <<EOF
+%{~for i, name in var.user_names~}
+${name}%{if i < length(var.user_names) - 1}, %{else}.%{endif}
+%{~endfor~}
+EOF
+}
