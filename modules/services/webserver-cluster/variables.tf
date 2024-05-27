@@ -56,3 +56,9 @@ variable "enable_autoscaling" {
   description = "If set to true enable the Auto Scaling"
   type        = bool
 }
+
+variable "server_text" {
+  description = "Text the web server should return"
+  type        = string
+  default     = "Hello World"
+}

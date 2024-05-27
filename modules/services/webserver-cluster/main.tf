@@ -71,6 +71,7 @@ resource "aws_launch_configuration" "example" {
     server_port = var.server_port
     db_address  = data.terraform_remote_state.s3.outputs.address
     db_port     = data.terraform_remote_state.s3.outputs.port
+    server_text = var.server_text
   })
 
   lifecycle {
@@ -79,6 +80,7 @@ resource "aws_launch_configuration" "example" {
 }
 
 resource "aws_autoscaling_group" "example" {
+  name                 = "${var.cluster_name}-${aws_launch_configuration.example.name}"
   launch_configuration = aws_launch_configuration.example.name
   vpc_zone_identifier  = data.aws_subnets.default.ids
 
@@ -87,6 +89,8 @@ resource "aws_autoscaling_group" "example" {
 
   min_size = var.min_size
   max_size = var.max_size
+
+  min_elb_capacity = var.min_size
 
   tag {
     key                 = "Name"
