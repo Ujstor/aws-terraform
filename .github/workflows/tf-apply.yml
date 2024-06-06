@@ -6,12 +6,13 @@ on:
   push:
     branches:
       - 'master'
+
+permissions:
+ id-token: write
+
 jobs:
   TerraformApply:
     runs-on: ubuntulatest
-    premissions:
-     id-token: write
-
     steps:
       - uses: actions/checkout@v4
 

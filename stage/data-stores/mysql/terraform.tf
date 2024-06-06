@@ -18,9 +18,9 @@ provider "aws" {
   region = "us-east-1"
   alias  = "stage"
 
-  assume_role {
-    role_arn = "arn:aws:iam::891377095143:role/OrganizationAccountAccessRole"
-  }
+  # assume_role {
+  #   role_arn = "arn:aws:iam::891377095143:role/OrganizationAccountAccessRole"
+  # }
 
   default_tags {
     tags = {
