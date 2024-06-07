@@ -33,6 +33,12 @@ data "aws_iam_policy_document" "assume_role_policy" {
         "repo:${a["org"]}/${a["repo"]}:ref:refs/heads/${a["branch"]}"
       ]
     }
+
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
   }
 }
 
