@@ -1,29 +1,36 @@
 name: Terraform Apply
-#action repo https://github.com/hashicorp/setup-terraform
-#aws https://github.com/aws-actions/configure-aws-credentials
-
+# action repo https://github.com/hashicorp/setup-terraform
+# aws https://github.com/aws-actions/configure-aws-credentials
+# https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
+
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   TerraformApply:
-    runs-on: ubuntulatest
-    premissions:
-     id-token: write
-
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
 
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v2
         with:
-         aws-region: us-east-1
-         role-to-assume: arn:aws:iam::795062932265:oidc-provider/token.actions.githubusercontent.com 
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::795062932265:role/GitHubActionsRole
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
 
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.8.4
           terraform_wrapper: false
+
       - run: |
+          cd stage/services/mysql
           terraform init
           terraform apply -auto-approve
+
+

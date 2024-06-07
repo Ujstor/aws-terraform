@@ -1,7 +1,7 @@
 name: Terraform Apply
 # action repo https://github.com/hashicorp/setup-terraform
 # aws https://github.com/aws-actions/configure-aws-credentials
-
+# https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
 on:
   push:
     branches:
@@ -20,7 +20,8 @@ jobs:
       - uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-region: us-east-1
-          role-to-assume: arn:aws:iam::795062932265:oidc-provider/token.actions.githubusercontent.com
+          role-to-assume: arn:aws:iam::795062932265:role/GitHubActionsRole
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
 
       - uses: hashicorp/setup-terraform@v1
         with:
