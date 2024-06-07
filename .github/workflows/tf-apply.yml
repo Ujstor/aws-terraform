@@ -1,6 +1,6 @@
 name: Terraform Apply
-#action repo https://github.com/hashicorp/setup-terraform
-#aws https://github.com/aws-actions/configure-aws-credentials
+# action repo https://github.com/hashicorp/setup-terraform
+# aws https://github.com/aws-actions/configure-aws-credentials
 
 on:
   push:
@@ -13,20 +13,22 @@ permissions:
 
 jobs:
   TerraformApply:
-    runs-on: ubuntulatest
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
 
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v2
         with:
-         aws-region: us-east-1
-         role-to-assume: arn:aws:iam::795062932265:oidc-provider/token.actions.githubusercontent.com 
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::795062932265:oidc-provider/token.actions.githubusercontent.com
 
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.8.4
           terraform_wrapper: false
+
       - run: |
           cd stage/services/mysql
           terraform init
           terraform apply -auto-approve
+
