@@ -43,12 +43,12 @@ resource "kubernetes_deployment" "app" {
   }
 }
 
-
 resource "kubernetes_service" "app" {
   metadata {
     name = var.name
   }
   spec {
+    type = "LoadBalancer"
     port {
       port        = var.ingress_port
       target_port = var.container_port

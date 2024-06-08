@@ -1,6 +1,6 @@
 # https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/ingress_v1
 locals {
-  status = kubernetes_ingress_v1.ingress.status
+  status = kubernetes_service.app.status
 }
 
 #AWS
