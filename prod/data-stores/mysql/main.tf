@@ -1,5 +1,5 @@
 module "mysql_primary" {
-  source = "../../../modules/data-stores/mysql"
+  source = "../../../modules/modules/data-stores/mysql/"
 
   providers = {
     aws = aws.primary

@@ -1,5 +1,5 @@
 module "eks_cluster" {
-  source       = "../../../modules/services/eks-cluster"
+  source       = "../../../modules/modules/eks-cluster/"
   name         = "example-eks-cluster"
   min_size     = 3
   max_size     = 6
