@@ -12,6 +12,10 @@ resource "aws_launch_configuration" "example" {
 
   lifecycle {
     create_before_destroy = true
+    precondition {
+      condition     = data.aws_ec2_instance_type.instance.free_tier_eligible
+      error_message = "${var.instance_type} is not free tier eligible"
+    }
   }
 }
 
@@ -19,6 +23,13 @@ resource "aws_autoscaling_group" "example" {
   name                 = var.cluster_name
   launch_configuration = aws_launch_configuration.example.name
   vpc_zone_identifier  = var.subnet_ids
+
+  lifecycle {
+    postcondition {
+      condition     = length(self.availability_zones) > 1
+      error_message = "At least 2 availability zones are required for this cluster"
+    }
+  }
 
   target_group_arns = var.target_group_arns
   health_check_type = var.health_check_type
