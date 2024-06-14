@@ -7,8 +7,8 @@ module "asg" {
 
   user_data = templatefile("${path.module}/user-data.sh", {
     server_port = var.server_port
-    db_address  = data.terraform_remote_state.db.outputs.address
-    db_port     = data.terraform_remote_state.db.outputs.port
+    db_address  = data.terraform_remote_state.s3.outputs.address
+    db_port     = data.terraform_remote_state.s3.outputs.port
     server_text = var.server_text
   })
 

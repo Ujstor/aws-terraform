@@ -1,5 +1,5 @@
 module "mysql_db_stage" {
-  source = "../../../modules/data-stores/mysql"
+  source = "../../../modules/modules/data-stores/mysql"
 
   providers = {
     aws = aws.stage

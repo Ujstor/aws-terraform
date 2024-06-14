@@ -9,14 +9,14 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "5.50.0"
+      version = "~> 4.0"
     }
   }
 }
 
 provider "aws" {
   region = "us-east-1"
-  alias = "primary"
+  alias  = "primary"
   default_tags {
     tags = {
       Owner     = "team-foo"
@@ -27,7 +27,7 @@ provider "aws" {
 
 provider "aws" {
   region = "us-east-2"
-  alias = "replica"
+  alias  = "replica"
   default_tags {
     tags = {
       Owner     = "team-foo"

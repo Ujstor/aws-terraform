@@ -1,5 +1,5 @@
 module "simple_webapp" {
-  source = "../../../modules/services/k8s"
+  source = "../../../modules/modules/k8s/"
 
   name           = "portfolio-webapp"
   image          = "ujstor/portfolio-web-go:1.2.0"
