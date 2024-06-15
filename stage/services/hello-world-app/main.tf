@@ -1,5 +1,6 @@
 module "hello-world-app" {
-  source = "github.com/ujstor/aws-terraform//modules/modules/services/hello-world-app?ref=v0.1.0"
+  source = "github.com/ujstor/aws-terraform//modules/modules/services/hello-world-app?ref=v0.1.3"
+  # source = "../../../modules/modules/services/hello-world-app/"
 
   providers = {
     aws = aws.stage
@@ -12,9 +13,8 @@ module "hello-world-app" {
   db_remote_state_bucket = "tf-state-ujstor"
   db_remote_state_key    = "stage/data-stores/mysql/terraform.tfstate"
 
-  server_text = "New server text from stage"
-  min_size    = 2
-  max_size    = 5
+  min_size = 2
+  max_size = 5
 
   custom_tags = {
     Owner     = "team-foo"

@@ -63,8 +63,6 @@ aws eks update-kubeconfig --region <REGION> --name <EKS_CLUSTER_NAME>
 │       ├── [ 930]  main.tf
 │       ├── [ 259]  outputs.tf
 │       ├── [ 374]  terraform.tf
-│       ├── [   0]  terraform.tfstate
-│       ├── [6.7K]  terraform.tfstate.backup
 │       └── [ 330]  variables.tf
 ├── [4.0K]  modules/
 │   ├── [4.0K]  examples/

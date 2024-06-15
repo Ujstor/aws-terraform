@@ -8,7 +8,7 @@ variable "allowed_repos_branches" {
   default = [
     {
       org    = "ujstor"
-      repo   = "aws-asg-tf"
+      repo   = "aws-terrafrom"
       branch = "master"
     }
   ]

@@ -11,16 +11,31 @@ variable "image_id" {
 variable "instance_type" {
   description = "The type of instance to start"
   type        = string
+
+  validation {
+    condition     = contains(["t2.micro", "t3.micro"], var.instance_type)
+    error_message = "Only free tier instances are supported | t2.micro, t3.micro"
+  }
 }
 
 variable "min_size" {
   description = "The minimum size of the Auto Scaling group"
   type        = number
+
+  validation {
+    condition     = var.min_size > 0
+    error_message = "ASG can be empty or we'll have an outage!"
+  }
 }
 
 variable "max_size" {
   description = "The maximum size of the Auto Scaling group"
   type        = number
+
+  validation {
+    condition     = var.max_size <= 10
+    error_message = "ASG must have 10 or less instances to keep costs down"
+  }
 }
 
 variable "custom_tags" {

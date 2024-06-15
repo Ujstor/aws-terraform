@@ -1,5 +1,6 @@
 module "simple_webapp" {
-  source = "../../../modules/modules/k8s/"
+  source = "github.com/ujstor/aws-terraform//modules/modules/k8s?ref=v0.1.3"
+  # source = "../../../modules/modules/k8s/"
 
   name           = "portfolio-webapp"
   image          = "ujstor/portfolio-web-go:1.2.0"
