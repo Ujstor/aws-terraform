@@ -17,7 +17,7 @@ variable "db_remote_state_key" {
 variable "server_text" {
   description = "Text the web server should return"
   type        = string
-  default     = "Hello World"
+  default     = "Hello World tag 0.1.0"
 }
 
 variable "environment" {

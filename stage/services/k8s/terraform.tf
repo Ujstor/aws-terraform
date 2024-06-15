@@ -13,9 +13,10 @@ terraform {
     }
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.0"
+      version = "~> 5.0"
     }
   }
+  required_version = ">= 1.0.0, < 2.0.0"
 }
 
 provider "kubernetes" {
