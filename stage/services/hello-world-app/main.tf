@@ -1,5 +1,5 @@
 module "hello-world-app" {
-  source = "../../../modules/modules/services/hello-world-app/"
+  source = "github.com/ujstor/aws-terraform//modules/modules/services/hello-world-app?ref=v0.1.0"
 
   providers = {
     aws = aws.stage
