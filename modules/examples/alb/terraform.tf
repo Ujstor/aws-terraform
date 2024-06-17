@@ -16,4 +16,3 @@ provider "aws" {
     role_arn = "arn:aws:iam::891377095143:role/OrganizationAccountAccessRole"
   }
 }
-

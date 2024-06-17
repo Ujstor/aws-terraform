@@ -43,6 +43,13 @@ For local testing with k3d, comment out the 'loadbalancer' form in the service o
 aws eks update-kubeconfig --region <REGION> --name <EKS_CLUSTER_NAME>
 ```
 
+## Terratest
+
+```bash
+cd modules/test
+go test -v -timeout 30m
+```
+
 ## Dir structure
 
 ```bash
