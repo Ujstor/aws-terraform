@@ -1,36 +1,36 @@
-name: Terraform Apply
-# action repo https://github.com/hashicorp/setup-terraform
-# aws https://github.com/aws-actions/configure-aws-credentials
-# https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
-on:
-  push:
-    branches:
-      - 'master'
-
-permissions:
-  id-token: write
-  contents: read
-
-jobs:
-  TerraformApply:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-skip-session-tagging: true
-          aws-region: us-east-1
-          role-to-assume: arn:aws:iam::795062932265:role/GitHubActionsRole
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.8.0
-          terraform_wrapper: false
-
-      - run: |
-          cd stage/services/mysql
-          terraform init
-          terraform apply -auto-approve
+# name: Terraform Apply
+# # action repo https://github.com/hashicorp/setup-terraform
+# # aws https://github.com/aws-actions/configure-aws-credentials
+# # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+# on:
+#   push:
+#     branches:
+#       - 'master'
+#
+# permissions:
+#   id-token: write
+#   contents: read
+#
+# jobs:
+#   TerraformApply:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v4
+#
+#       - uses: aws-actions/configure-aws-credentials@v4
+#         with:
+#           role-skip-session-tagging: true
+#           aws-region: us-east-1
+#           role-to-assume: arn:aws:iam::795062932265:role/GitHubActionsRole
+#           role-session-name: GitHub_to_AWS_via_FederatedOIDC
+#
+#       - uses: hashicorp/setup-terraform@v3
+#         with:
+#           terraform_version: 1.8.0
+#           terraform_wrapper: false
+#
+#       - run: |
+#           cd stage/services/mysql
+#           terraform init
+#           terraform apply -auto-approve
 

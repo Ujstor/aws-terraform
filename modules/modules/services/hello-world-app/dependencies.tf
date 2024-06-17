@@ -1,15 +1,6 @@
-data "aws_vpc" "default" {
-  default = true
-}
-
-data "aws_subnets" "default" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
-  }
-}
-
 data "terraform_remote_state" "s3" {
+  count = var.mysql_config == null ? 1 : 0
+
   backend = "s3"
 
   config = {
@@ -17,4 +8,39 @@ data "terraform_remote_state" "s3" {
     key    = var.db_remote_state_key
     region = var.tf_remote_state_region
   }
+}
+
+data "aws_vpc" "default" {
+  count   = var.vpc_id == null ? 1 : 0
+  default = true
+}
+
+data "aws_subnets" "default" {
+  count = var.subnet_ids == null ? 1 : 0
+
+  filter {
+    name   = "vpc-id"
+    values = [local.vpc_id]
+  }
+
+}
+
+locals {
+  mysql_config = (
+    var.mysql_config == null
+    ? data.terraform_remote_state.s3[0].outputs
+    : var.mysql_config
+  )
+
+  vpc_id = (
+    var.vpc_id == null
+    ? data.aws_vpc.default[0].id
+    : var.vpc_id
+  )
+
+  subnet_ids = (
+    var.subnet_ids == null
+    ? data.aws_subnets.default[0].ids
+    : var.subnet_ids
+  )
 }

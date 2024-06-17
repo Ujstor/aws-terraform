@@ -7,11 +7,13 @@ variable "tf_remote_state_region" {
 variable "db_remote_state_bucket" {
   description = "The name of S3 bucked for db remote state"
   type        = string
+  default     = null
 }
 
 variable "db_remote_state_key" {
   description = "Path for the db remote state in S3"
   type        = string
+  default     = null
 }
 
 variable "server_text" {
@@ -61,20 +63,29 @@ variable "enable_autoscaling" {
   type        = bool
 }
 
-variable "target_group_arns" {
-  description = "The ARNs of ELB target groups in which to register Instances"
-  type        = list(string)
-  default     = []
-}
-
-variable "health_check_type" {
-  description = "The type of health check to perform. Must be one of: EC2, ELB."
-  type        = string
-  default     = "EC2"
-}
-
 variable "user_data" {
   description = "The User Data script to run in each Instance at boot"
   type        = string
   default     = null
+}
+
+variable "vpc_id" {
+  description = "The ID of the VPC to deploy into"
+  type        = string
+  default     = null
+}
+
+variable "subnet_ids" {
+  description = "The IDs of the subnets to deploy into"
+  type        = list(string)
+  default     = null
+}
+
+variable "mysql_config" {
+  description = "The config for the MySQL DB"
+  type = object({
+    address = string
+    port    = number
+  })
+  default = null
 }

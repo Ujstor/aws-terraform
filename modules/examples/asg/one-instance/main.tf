@@ -2,7 +2,7 @@ module "asg" {
   source = "../../../modules/cluster/asg-rolling-deploy"
 
   providers = {
-    aws = aws.stage
+    aws = aws.snadbox
   }
 
   cluster_name       = var.cluster_name

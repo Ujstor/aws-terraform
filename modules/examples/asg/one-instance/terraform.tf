@@ -10,10 +10,10 @@ terraform {
 
 provider "aws" {
   region = "us-east-1"
-  alias  = "stage"
+  alias  = "snadbox"
 
   assume_role {
-    role_arn = "arn:aws:iam::891377095143:role/OrganizationAccountAccessRole"
+    role_arn = "arn:aws:iam::730335647984:role/OrganizationAccountAccessRole"
   }
 }
 
