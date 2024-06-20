@@ -48,6 +48,8 @@ aws eks update-kubeconfig --region <REGION> --name <EKS_CLUSTER_NAME>
 ```bash
 cd modules/test
 go test -v -timeout 30m
+go test -v -timeout 30m -run TestHelloWorldAppExample
+go test -v -timeout 30m -parallel 2
 ```
 
 ## Dir structure
@@ -58,9 +60,9 @@ go test -v -timeout 30m
 │   ├── [4.0K]  ghAction/
 │   │   ├── [1.6K]  main.tf
 │   │   ├── [ 535]  outputs.tf
-│   │   ├── [ 337]  terraform.tf
+│   │   ├── [ 411]  terraform.tf
 │   │   ├── [ 992]  tf-apply.yml
-│   │   └── [ 305]  variables.tf
+│   │   └── [ 308]  variables.tf
 │   ├── [4.0K]  iam/
 │   │   ├── [1.2K]  main.tf
 │   │   ├── [1.7K]  outputs.tf
@@ -73,12 +75,30 @@ go test -v -timeout 30m
 │       └── [ 330]  variables.tf
 ├── [4.0K]  modules/
 │   ├── [4.0K]  examples/
-│   │   └── [4.0K]  asg/
-│   │       └── [4.0K]  one-instance/
-│   │           ├── [ 697]  main.tf
-│   │           ├── [ 111]  outputs.tf
-│   │           ├── [ 202]  terraform.tf
-│   │           └── [  79]  variables.tf
+│   │   ├── [4.0K]  alb/
+│   │   │   ├── [ 207]  dependencies.tf
+│   │   │   ├── [ 177]  main.tf
+│   │   │   ├── [ 382]  outputs.tf
+│   │   │   ├── [ 320]  terraform.tf
+│   │   │   ├── [5.9K]  terraform.tfstate
+│   │   │   ├── [ 181]  terraform.tfstate.backup
+│   │   │   └── [ 116]  variables.tf
+│   │   ├── [4.0K]  asg/
+│   │   │   └── [4.0K]  one-instance/
+│   │   │       ├── [ 439]  dependencies.tf
+│   │   │       ├── [ 370]  main.tf
+│   │   │       ├── [ 111]  outputs.tf
+│   │   │       ├── [ 321]  terraform.tf
+│   │   │       └── [  79]  variables.tf
+│   │   └── [4.0K]  hello-world-app/
+│   │       └── [4.0K]  standalone/
+│   │           ├── [ 721]  dependencies.tf
+│   │           ├── [ 422]  main.tf
+│   │           ├── [ 109]  outputs.tf
+│   │           ├── [ 319]  terraform.tf
+│   │           ├── [ 29K]  terraform.tfstate
+│   │           ├── [1.0K]  terraform.tfstate.backup
+│   │           └── [ 625]  variables.tf
 │   ├── [4.0K]  modules/
 │   │   ├── [4.0K]  cluster/
 │   │   │   └── [4.0K]  asg-rolling-deploy/
@@ -86,7 +106,7 @@ go test -v -timeout 30m
 │   │   │       ├── [3.5K]  main.tf
 │   │   │       ├── [ 274]  outputs.tf
 │   │   │       ├── [ 159]  terraform.tf
-│   │   │       └── [1.4K]  variables.tf
+│   │   │       └── [1.9K]  variables.tf
 │   │   ├── [4.0K]  data-stores/
 │   │   │   └── [4.0K]  mysql/
 │   │   │       ├── [ 669]  main.tf
@@ -98,7 +118,7 @@ go test -v -timeout 30m
 │   │   │   ├── [2.3K]  main.tf
 │   │   │   ├── [ 517]  outputs.tf
 │   │   │   ├── [ 159]  terraform.tf
-│   │   │   └── [1015]  variables.tf
+│   │   │   └── [ 583]  variables.tf
 │   │   ├── [4.0K]  k8s/
 │   │   │   ├── [1.3K]  main.tf
 │   │   │   ├── [ 368]  outputs.tf
@@ -112,54 +132,58 @@ go test -v -timeout 30m
 │   │   │       └── [ 187]  variables.tf
 │   │   └── [4.0K]  services/
 │   │       └── [4.0K]  hello-world-app/
-│   │           ├── [ 348]  dependencies.tf
-│   │           ├── [1.5K]  main.tf
+│   │           ├── [ 797]  dependencies.tf
+│   │           ├── [1.4K]  main.tf
 │   │           ├── [ 389]  outputs.tf
 │   │           ├── [ 159]  terraform.tf
 │   │           ├── [ 168]  user-data.sh
-│   │           └── [1.8K]  variables.tf
+│   │           └── [2.0K]  variables.tf
 │   └── [4.0K]  test/
+│       ├── [ 870]  alb_example_test.go
+│       ├── [2.6K]  go.mod
+│       ├── [ 94K]  go.sum
+│       └── [1.0K]  hello_world_test.go
 ├── [4.0K]  packer/
 │   ├── [ 576]  webserver.json
 │   └── [ 724]  webserver.json.pkr.hcl
 ├── [4.0K]  prod/
 │   ├── [4.0K]  data-stores/
 │   │   └── [4.0K]  mysql/
-│   │       ├── [ 533]  main.tf
+│   │       ├── [ 626]  main.tf
 │   │       ├── [ 783]  output.tf
-│   │       ├── [ 671]  terraform.tf
+│   │       ├── [ 712]  terraform.tf
 │   │       └── [ 265]  variables.tf
 │   └── [4.0K]  services/
 │       ├── [4.0K]  eks-cluster/
 │       │   ├── [  81]  dependencies.tf
-│       │   ├── [ 528]  main.tf
+│       │   ├── [ 693]  main.tf
 │       │   ├── [ 257]  outputs.tf
-│       │   └── [ 735]  terraform.tf
+│       │   └── [ 776]  terraform.tf
 │       └── [4.0K]  hello-world-app/
 │           ├── [ 202]  dependencies.tf
-│           ├── [ 517]  main.tf
+│           ├── [ 572]  main.tf
 │           ├── [ 111]  outputs.tf
-│           └── [ 497]  terraform.tf
+│           └── [ 538]  terraform.tf
 ├── [4.0K]  stage/
 │   ├── [4.0K]  data-stores/
 │   │   └── [4.0K]  mysql/
-│   │       ├── [ 296]  main.tf
+│   │       ├── [ 389]  main.tf
 │   │       ├── [ 337]  output.tf
-│   │       ├── [ 607]  terraform.tf
+│   │       ├── [ 648]  terraform.tf
 │   │       └── [ 266]  variables.tf
 │   └── [4.0K]  services/
 │       ├── [4.0K]  hello-world-app/
 │       │   ├── [ 202]  dependencies.tf
-│       │   ├── [ 538]  main.tf
+│       │   ├── [ 587]  main.tf
 │       │   ├── [ 109]  outputs.tf
-│       │   ├── [ 615]  terraform.tf
-│       │   └── [ 121]  variables.tf
+│       │   └── [ 656]  terraform.tf
 │       └── [4.0K]  k8s/
-│           ├── [ 341]  main.tf
+│           ├── [ 420]  main.tf
 │           ├── [ 127]  outputs.tf
-│           └── [ 530]  terraform.tf
+│           └── [ 571]  terraform.tf
 ├── [1.0K]  LICENSE.txt
-└── [4.5K]  README.md
+├── [5.7K]  README.md
+└── [ 180]  terraform.tfstate
 ```
 
 ## License

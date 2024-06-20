@@ -22,3 +22,8 @@ variable "subnet_ids" {
   default     = null
 }
 
+variable "environment" {
+  description = "The name of the environment we're deploying to"
+  type        = string
+  default     = "snadbox-hello-world-example"
+}
