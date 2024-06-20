@@ -2,6 +2,7 @@
 *.tfstate.backup
 .terraform
 *.iml
+.test-data
 
 # .auto.tfvars #shuld be included in.gitignore
 

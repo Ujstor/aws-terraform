@@ -10,6 +10,7 @@ module "hello-world-app" {
   image_id      = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
 
+  # mysql_config = var.mysql_config
   db_remote_state_bucket = var.db_remote_state_bucket
   db_remote_state_key    = var.db_remote_state_key
 

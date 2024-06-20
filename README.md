@@ -61,6 +61,44 @@ This will prevent overwriting the state file and can be used manually:
 terraform init -backend-config=backend.hcl
 ```
 
+Run the integration tests:
+
+```bash
+go test -v -timeout 30m -run TestHelloWorldAppStage
+```
+If Stagins is implemented, exclude steps for the Stages:
+
+```bash
+SKIP_teardown_db=true \
+SKIP_teardown_app=true \
+SKIP_deploy_db=true \
+SKIP_deploy_app=true \
+SKIP_validate_app=true \
+go test -v -timeout 30m -run TestHelloWorldAppStage
+```
+### Integration tests in Stages
+
+```bash
+SKIP_teardown_db=true \
+SKIP_teardown_app=true \
+go test -timeout 30m -run TestHelloWorldAppStageWithStages
+```
+
+```bash
+SKIP_teardown_db=true \
+SKIP_teardown_app=true \
+SKIP_deploy_db=true \
+go test -timeout 30m -run TestHelloWorldAppStageWithStages
+```
+
+clean up
+
+```bash
+SKIP_deploy_db=true \
+SKIP_deploy_app=true \
+SKIP_validate_app=true \
+go test -timeout 30m -run TestHelloWorldAppStageWithStages
+```
 ## License
 
 This code is released under the MIT License.
