@@ -10,3 +10,8 @@ variable "db_password" {
   sensitive   = true
 }
 
+variable "db_name" {
+  description = "Name of the database to create"
+  type        = string
+  default     = "stageDb"
+}
